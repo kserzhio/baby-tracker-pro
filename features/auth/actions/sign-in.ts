@@ -52,9 +52,16 @@ export async function signInWithMagicLink(email: string) {
   });
 
   if (error) {
+    console.error("Supabase signInWithOtp failed", {
+      message: error.message,
+      status: error.status,
+      code: error.code,
+      appUrl
+    });
+
     return {
       ok: false,
-      message: dictionary.auth.error
+      message: error.message || dictionary.auth.error
     };
   }
 
