@@ -1,5 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
-import { differenceInMonths, format } from "date-fns";
+import { differenceInMinutes, format, formatDistanceStrict } from "date-fns";
 import { enUS, uk as ukLocale } from "date-fns/locale";
 import { twMerge } from "tailwind-merge";
 
@@ -9,49 +9,29 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function getDateFnsLocale(locale: Locale) {
+  return locale === "uk" ? ukLocale : enUS;
+}
+
 export function formatDate(date: Date | string, locale: Locale = "en", pattern = "MMM d, yyyy") {
   return format(new Date(date), pattern, {
-    locale: locale === "uk" ? ukLocale : enUS
+    locale: getDateFnsLocale(locale)
   });
 }
 
-type AgeLabels = {
-  newborn: string;
-  month: string;
-  months: string;
-  year: string;
-  years: string;
-};
+export function formatDateTimeLocal(date: Date) {
+  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  return localDate.toISOString().slice(0, 16);
+}
 
-export function calculateAgeLabel(
-  from: Date | string,
-  to: Date | string = new Date(),
-  labels: AgeLabels = {
-    newborn: "Newborn",
-    month: "month",
-    months: "months",
-    year: "year",
-    years: "years"
-  }
-) {
-  const totalMonths = Math.max(0, differenceInMonths(new Date(to), new Date(from)));
+export function formatDuration(start: Date | string, end: Date | string, locale: Locale) {
+  return formatDistanceStrict(new Date(start), new Date(end), {
+    locale: getDateFnsLocale(locale)
+  });
+}
 
-  if (totalMonths < 1) {
-    return labels.newborn;
-  }
-
-  const years = Math.floor(totalMonths / 12);
-  const months = totalMonths % 12;
-
-  if (years === 0) {
-    return `${months} ${months === 1 ? labels.month : labels.months}`;
-  }
-
-  if (months === 0) {
-    return `${years} ${years === 1 ? labels.year : labels.years}`;
-  }
-
-  return `${years} ${years === 1 ? labels.year : labels.years} ${months} ${months === 1 ? labels.month : labels.months}`;
+export function getMinutesBetween(start: Date | string, end: Date | string) {
+  return Math.max(0, differenceInMinutes(new Date(end), new Date(start)));
 }
 
 export function formatMessage(template: string, values: Record<string, string | number>) {

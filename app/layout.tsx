@@ -1,32 +1,37 @@
 import type { Metadata } from "next";
-import { DM_Serif_Display, Nunito } from "next/font/google";
+import { Fraunces, Plus_Jakarta_Sans } from "next/font/google";
 import type { ReactNode } from "react";
 
-import { getLocale } from "@/lib/i18n/server";
+import { LocaleSync } from "@/features/locale/components/locale-sync";
+import { getI18n } from "@/lib/i18n/server";
 import "./globals.css";
 
-const headingFont = DM_Serif_Display({
+const headingFont = Fraunces({
   subsets: ["latin"],
-  weight: "400",
   variable: "--font-heading"
 });
 
-const bodyFont = Nunito({
+const bodyFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
   variable: "--font-body"
 });
 
-export const metadata: Metadata = {
-  title: "Baby Life Album",
-  description: "A private family album for milestones, memories, and growth tracking."
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const { dictionary } = await getI18n();
+
+  return {
+    title: dictionary.meta.title,
+    description: dictionary.meta.description
+  };
+}
 
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  const locale = await getLocale();
+  const { locale } = await getI18n();
 
   return (
     <html lang={locale}>
       <body className={`${headingFont.variable} ${bodyFont.variable} font-[family-name:var(--font-body)]`}>
+        <LocaleSync locale={locale} />
         {children}
       </body>
     </html>

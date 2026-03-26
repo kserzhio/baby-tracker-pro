@@ -2,15 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarDays, Heart, LayoutDashboard, LineChart, PlusCircle } from "lucide-react";
+import { Baby, Clock3, LayoutDashboard } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 
 const iconMap = {
   "/dashboard": LayoutDashboard,
-  "/timeline": CalendarDays,
-  "/memories/new": PlusCircle,
-  "/growth": LineChart
+  "/babies": Baby,
+  "/timeline": Clock3
 };
 
 export function SidebarNav({
@@ -25,20 +24,13 @@ export function SidebarNav({
   const pathname = usePathname();
 
   return (
-    <div className="flex h-full flex-col">
-      <div className="rounded-[28px] bg-gradient-to-br from-orange-100 via-amber-50 to-emerald-100 p-5 shadow-soft">
-        <div className="flex items-center gap-3">
-          <div className="rounded-2xl bg-white/80 p-3 text-primary">
-            <Heart className="h-6 w-6 fill-current" />
-          </div>
-          <div>
-            <p className="font-[family-name:var(--font-heading)] text-2xl leading-none">{title}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{description}</p>
-          </div>
-        </div>
+    <div className="sticky top-8 space-y-6">
+      <div className="rounded-[32px] border border-white/70 bg-white/80 p-6 shadow-soft">
+        <p className="font-[family-name:var(--font-heading)] text-3xl text-foreground">{title}</p>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
       </div>
 
-      <nav className="mt-8 space-y-2">
+      <nav className="space-y-2 rounded-[32px] border border-white/70 bg-white/70 p-3 shadow-soft">
         {items.map((item) => {
           const Icon = iconMap[item.href as keyof typeof iconMap];
           const isActive = pathname === item.href;
@@ -50,8 +42,8 @@ export function SidebarNav({
               className={cn(
                 "flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-semibold transition-colors",
                 isActive
-                  ? "bg-primary text-primary-foreground shadow-soft"
-                  : "text-muted-foreground hover:bg-white/80 hover:text-foreground"
+                  ? "bg-primary text-primary-foreground"
+                  : "text-muted-foreground hover:bg-secondary hover:text-foreground"
               )}
             >
               <Icon className="h-4 w-4" />

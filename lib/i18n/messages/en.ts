@@ -1,139 +1,114 @@
 const en = {
+  meta: {
+    title: "Baby Tracker Pro",
+    description: "Track feeding, sleep, diapers, and notes in seconds."
+  },
   common: {
-    appName: "Baby Life Album",
-    appDescription: "Moments, milestones, and growth in one cozy place.",
-    addMemory: "Add Memory",
-    reset: "Reset",
-    noData: "No data",
-    save: "Save",
-    optional: "optional",
+    appName: "Baby Tracker Pro",
+    appDescription: "Fast newborn tracking for tired parents.",
     language: "Language",
-    english: "English",
-    ukrainian: "Ukrainian"
+    english: "EN",
+    ukrainian: "UA",
+    signOut: "Sign out",
+    signedInAs: "Signed in as {email}"
   },
   navigation: {
     dashboard: "Dashboard",
-    timeline: "Timeline",
-    addMemory: "Add Memory",
-    growth: "Growth Tracker"
+    babies: "Babies",
+    timeline: "Timeline"
   },
-  sidebar: {
-    title: "Family Keepsake",
-    description: "A warm private space for firsts and favorites."
-  },
-  categories: {
-    FIRST_SMILE: "First Smile",
-    FIRST_TOOTH: "First Tooth",
-    FIRST_STEPS: "First Steps",
-    FIRST_WORD: "First Word",
-    DOCTOR_VISIT: "Doctor Visit",
-    PHOTO_MEMORY: "Photo Memory",
-    MILESTONE: "Milestone"
-  },
-  age: {
-    newborn: "Newborn",
-    month: "month",
-    months: "months",
-    year: "year",
-    years: "years"
+  auth: {
+    badge: "One-hand friendly",
+    title: "Track the essentials without slowing down.",
+    description: "Sign in with your email and we’ll send a secure magic link.",
+    emailLabel: "Email",
+    emailPlaceholder: "parent@example.com",
+    submit: "Send magic link",
+    submitting: "Sending...",
+    checkEmail: "Check your email for the sign-in link.",
+    error: "Unable to send the sign-in link."
   },
   dashboard: {
-    eyebrow: "Dashboard",
-    title: "Welcome back to {name}'s album",
-    description: "A quick view of milestones, recent memories, and the latest growth update.",
-    currentAge: "Current Age",
-    bornOn: "Born on {date}",
-    memoriesSaved: "Memories Saved",
-    memoriesSavedHint: "A growing timeline of family firsts.",
-    growthEntries: "Growth Entries",
-    growthEntriesHint: "Measurements from checkups and home updates.",
-    latestWeight: "Latest Weight",
-    loggedOn: "Logged on {date}",
-    addGrowthToBegin: "Add a growth entry to begin.",
-    familySnapshot: "Family Snapshot",
-    snapshotDescription:
-      "Keep milestones, doctor notes, and favorite photo memories together in one calm, private place that feels easy to maintain.",
-    birthDate: "Birth date",
-    latestHeight: "Latest height",
-    viewGrowthTracker: "View growth tracker",
-    topCategories: "Top categories",
-    recentActivity: "Recent activity",
-    recentActivityDescription: "The newest milestones saved to the family timeline.",
-    noRecentMemories: "No recent memories",
-    noRecentMemoriesDescription: "Once you save a memory, it will show up here.",
-    featuredMemories: "Featured memories",
-    featuredMemoriesDescription: "A quick glance at the moments that make the album feel alive.",
-    openFullTimeline: "Open full timeline",
-    noChildProfile: "No child profile found",
-    noChildProfileDescription: "Seed the database or add a profile to start tracking memories and growth."
+    title: "Quick log for today",
+    description: "Fast actions for feeds, sleep, diapers, and notes.",
+    babiesTitle: "Your babies",
+    recentTitle: "Recent activity",
+    emptyTitle: "No events yet today",
+    emptyDescription: "Use the quick form below to log the first event.",
+    addBabyHint: "Create a baby profile first so events have a home.",
+    totalBabies: "Babies",
+    feedingCount: "Feedings",
+    sleepCount: "Sleep sessions",
+    diaperCount: "Diapers",
+    noteCount: "Notes"
+  },
+  babies: {
+    title: "Babies",
+    description: "Keep profiles simple so logging stays fast.",
+    formTitle: "Add a baby",
+    formDescription: "Only the essentials.",
+    emptyTitle: "No babies yet",
+    emptyDescription: "Create the first profile to unlock tracking.",
+    eventsCount: "{count} events",
+    nameLabel: "Name",
+    namePlaceholder: "Sofiia",
+    birthDateLabel: "Birth date",
+    submit: "Add baby",
+    submitting: "Adding..."
   },
   timeline: {
-    eyebrow: "Timeline",
-    title: "A timeline of firsts and favorite moments",
-    description: "Every entry includes what happened, when it happened, and how old your child was at the time.",
-    emptyTitle: "No memories yet",
-    emptyDescription: "Start the album with a first smile, a doctor visit, or a favorite photo memory.",
-    emptyAction: "Add the first memory"
+    title: "Timeline",
+    description: "Grouped by day so patterns are easy to scan.",
+    emptyTitle: "No events yet",
+    emptyDescription: "Once you log events, they’ll appear here."
   },
-  memoryForm: {
-    eyebrow: "Add Memory",
-    title: "Save a moment while it is still fresh",
-    description: "Capture a milestone, photo memory, or doctor visit with just enough detail to make it meaningful later.",
-    cardTitle: "Add a new memory",
-    cardDescription: "Capture one special moment at a time with the details you want to remember later.",
-    titleLabel: "Title",
-    titlePlaceholder: "First steps across the living room",
-    categoryLabel: "Category",
-    eventDateLabel: "Event date",
-    imageUrlLabel: "Image URL (optional)",
-    imageUrlPlaceholder: "https://example.com/photo.jpg",
-    descriptionLabel: "Description",
-    descriptionPlaceholder: "Write down what happened and why it mattered...",
-    submit: "Save memory",
-    submitting: "Saving memory...",
-    createProfileFirst: "Create a child profile before adding memories.",
-    validationMessage: "Please fix the highlighted fields."
+  eventForm: {
+    title: "Quick event",
+    description: "Designed for one thumb and low battery.",
+    babyLabel: "Baby",
+    typeLabel: "Event type",
+    startedAtLabel: "Start",
+    endedAtLabel: "End",
+    amountMlLabel: "Amount (ml)",
+    feedingMethodLabel: "Feeding method",
+    diaperTypeLabel: "Diaper type",
+    noteLabel: "Notes",
+    notePlaceholder: "Short note if you need it",
+    submit: "Save event",
+    submitting: "Saving...",
+    types: {
+      FEEDING: "Feeding",
+      SLEEP: "Sleep",
+      DIAPER: "Diaper",
+      NOTE: "Note"
+    },
+    feedingMethods: {
+      BREAST: "Breast",
+      BOTTLE: "Bottle",
+      FORMULA: "Formula"
+    },
+    diaperTypes: {
+      WET: "Wet",
+      DIRTY: "Dirty",
+      MIXED: "Mixed"
+    }
   },
-  growth: {
-    eyebrow: "Growth Tracker",
-    title: "Track height and weight over time",
-    description: "A simple tracker for measurements, checkup notes, and progress between visits.",
-    formTitle: "Add a growth entry",
-    formDescription: "Keep height and weight records tidy so trends are easy to spot over time.",
-    dateLabel: "Date",
-    heightLabel: "Height (cm)",
-    weightLabel: "Weight (kg)",
-    notesLabel: "Notes",
-    notesPlaceholder: "Any context from the visit or changes you want to remember...",
-    submit: "Save growth entry",
-    submitting: "Saving entry...",
-    historyTitle: "Growth history",
-    emptyTitle: "No growth entries yet",
-    emptyDescription: "Add the first measurement to start building a simple growth history.",
-    trend: "Trend",
-    baseline: "Baseline",
-    noNotes: "No notes added.",
-    createProfileFirst: "Create a child profile before adding growth entries.",
-    validationMessage: "Please fix the highlighted fields.",
-    addGrowthEntry: "Add a growth entry"
-  },
-  memoryCard: {
-    eventDateFallback: "Unknown date"
-  },
-  table: {
-    date: "Date",
-    height: "Height",
-    weight: "Weight",
-    notes: "Notes"
+  events: {
+    noNote: "No note",
+    feedingSummary: "{method} • {amount} ml",
+    diaperSummary: "{diaperType} diaper",
+    sleepSummary: "Slept for {duration}",
+    noteSummary: "Note added"
   },
   validation: {
-    titleMin: "Title must be at least 2 characters.",
-    eventDateRequired: "Please select an event date.",
-    descriptionMin: "Description should be at least 10 characters.",
-    imageUrlInvalid: "Image URL must be valid.",
-    recordedAtRequired: "Please select a date.",
-    heightPositive: "Height must be greater than 0.",
-    weightPositive: "Weight must be greater than 0."
+    emailInvalid: "Enter a valid email address.",
+    nameMin: "Name must be at least 2 characters.",
+    birthDateRequired: "Birth date is required.",
+    babyIdRequired: "Select a baby.",
+    startedAtRequired: "Start time is required.",
+    endedAtInvalid: "End time must be after start time.",
+    amountPositive: "Amount must be greater than 0.",
+    noteMax: "Note is too long."
   }
 } as const;
 

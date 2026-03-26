@@ -1,37 +1,57 @@
-import { MemoryCategory, PrismaClient } from "@prisma/client";
+import { DiaperType, EventType, FeedingMethod, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.growthEntry.deleteMany();
-  await prisma.memory.deleteMany();
-  await prisma.child.deleteMany();
+  const userId = "seed-user";
 
-  const child = await prisma.child.create({
-    data: {
-      firstName: "Дем'ян",
-      lastName: "Костенко",
-      birthDate: new Date("2026-02-27T00:00:00.000Z")
+  const baby = await prisma.baby.upsert({
+    where: { id: "seed-baby" },
+    update: {},
+    create: {
+      id: "seed-baby",
+      userId,
+      name: "Mia",
+      birthDate: new Date("2026-02-14T08:00:00.000Z")
     }
   });
 
-  await prisma.memory.createMany({
-    data: [
-    ]
+  const existingEvents = await prisma.event.count({
+    where: {
+      userId,
+      babyId: baby.id
+    }
   });
 
-  await prisma.growthEntry.createMany({
-    data: [
-    ]
-  });
+  if (existingEvents === 0) {
+    await prisma.event.createMany({
+      data: [
+        {
+          userId,
+          babyId: baby.id,
+          type: EventType.FEEDING,
+          startedAt: new Date(),
+          amountMl: 90,
+          feedingMethod: FeedingMethod.BOTTLE,
+          note: "Calm feed"
+        },
+        {
+          userId,
+          babyId: baby.id,
+          type: EventType.DIAPER,
+          startedAt: new Date(Date.now() - 1000 * 60 * 90),
+          diaperType: DiaperType.WET
+        }
+      ]
+    });
+  }
 }
 
 main()
-  .then(async () => {
-    await prisma.$disconnect();
-  })
-  .catch(async (error) => {
+  .catch((error) => {
     console.error(error);
-    await prisma.$disconnect();
     process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
   });

@@ -7,53 +7,53 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum MemoryCategory {
-  FIRST_SMILE
-  FIRST_TOOTH
-  FIRST_STEPS
-  FIRST_WORD
-  DOCTOR_VISIT
-  PHOTO_MEMORY
-  MILESTONE
+enum EventType {
+  FEEDING
+  SLEEP
+  DIAPER
+  NOTE
 }
 
-model Child {
-  id         String        @id @default(cuid())
-  firstName  String
-  lastName   String?
-  birthDate  DateTime
-  createdAt  DateTime      @default(now())
-  updatedAt  DateTime      @updatedAt
-  memories   Memory[]
-  growthLogs GrowthEntry[]
+enum FeedingMethod {
+  BREAST
+  BOTTLE
+  FORMULA
 }
 
-model Memory {
-  id          String         @id @default(cuid())
-  childId      String
-  title        String
-  category     MemoryCategory
-  eventDate    DateTime
-  description  String
-  imageUrl     String?
-  createdAt    DateTime       @default(now())
-  updatedAt    DateTime       @updatedAt
-  child        Child          @relation(fields: [childId], references: [id], onDelete: Cascade)
-
-  @@index([childId, eventDate])
+enum DiaperType {
+  WET
+  DIRTY
+  MIXED
 }
 
-model GrowthEntry {
-  id          String    @id @default(cuid())
-  childId     String
-  recordedAt  DateTime
-  heightCm    Float
-  weightKg    Float
-  notes       String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  child       Child     @relation(fields: [childId], references: [id], onDelete: Cascade)
+model Baby {
+  id        String   @id @default(cuid())
+  userId    String
+  name      String
+  birthDate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  events    Event[]
 
-  @@unique([childId, recordedAt])
-  @@index([childId, recordedAt])
+  @@index([userId, createdAt])
+}
+
+model Event {
+  id            String         @id @default(cuid())
+  userId        String
+  babyId        String
+  type          EventType
+  startedAt     DateTime
+  endedAt       DateTime?
+  amountMl      Int?
+  feedingMethod FeedingMethod?
+  diaperType    DiaperType?
+  note          String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  baby          Baby           @relation(fields: [babyId], references: [id], onDelete: Cascade)
+
+  @@index([userId, startedAt(sort: Desc)])
+  @@index([babyId, startedAt(sort: Desc)])
+  @@index([userId, type, startedAt(sort: Desc)])
 }

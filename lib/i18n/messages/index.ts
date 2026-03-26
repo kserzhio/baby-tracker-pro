@@ -9,6 +9,6 @@ export const dictionaries = {
 
 export type Dictionary = (typeof dictionaries)[Locale];
 
-export function getDictionary(locale: Locale): Dictionary {
+export function getDictionary(locale: Locale) {
   return dictionaries[locale];
 }

@@ -1,33 +1,22 @@
-import { getChildProfile } from "@/features/child/data/child.repository";
-import { getLatestGrowthEntry } from "@/features/growth/data/growth.repository";
-import { getMemoryHighlights, getRecentMemories } from "@/features/memories/data/memories.repository";
-import type { Locale } from "@/lib/i18n/config";
-import { getDictionary } from "@/lib/i18n/messages";
-import { calculateAgeLabel } from "@/lib/utils";
+import { getBabiesByUser } from "@/features/babies/data/babies.repository";
+import { getRecentEvents, getTodayEvents } from "@/features/events/data/events.repository";
 
-export async function getDashboardData(locale: Locale = "en") {
-  const [child, recentMemories, latestGrowth, memoryHighlights] = await Promise.all([
-    getChildProfile(),
-    getRecentMemories(locale),
-    getLatestGrowthEntry(),
-    getMemoryHighlights(locale)
+export async function getDashboardData(userId: string) {
+  const [babies, todayEvents, recentEvents] = await Promise.all([
+    getBabiesByUser(userId),
+    getTodayEvents(userId),
+    getRecentEvents(userId)
   ]);
 
-  if (!child) {
-    return null;
-  }
-
-  const dictionary = getDictionary(locale);
-
   return {
-    child,
-    childAge: calculateAgeLabel(child.birthDate, new Date(), dictionary.age),
-    recentMemories,
-    latestGrowth,
-    memoryHighlights,
-    stats: {
-      totalMemories: child.memories.length,
-      totalGrowthEntries: child.growthLogs.length
+    babies,
+    recentEvents,
+    summary: {
+      babies: babies.length,
+      feeding: todayEvents.filter((event) => event.type === "FEEDING").length,
+      sleep: todayEvents.filter((event) => event.type === "SLEEP").length,
+      diaper: todayEvents.filter((event) => event.type === "DIAPER").length,
+      note: todayEvents.filter((event) => event.type === "NOTE").length
     }
   };
 }
