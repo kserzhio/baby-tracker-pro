@@ -6,6 +6,8 @@ import { getBabiesByUser } from "@/features/babies/data/babies.repository";
 import { getI18n } from "@/lib/i18n/server";
 import { formatDate, formatMessage } from "@/lib/utils";
 
+type BabyListItem = Awaited<ReturnType<typeof getBabiesByUser>>[number];
+
 export async function BabiesPageContent() {
   const user = await requireCurrentUser();
   const { dictionary, locale } = await getI18n();
@@ -28,7 +30,7 @@ export async function BabiesPageContent() {
           </div>
         ) : (
           <div className="grid gap-4 sm:grid-cols-2">
-            {babies.map((baby) => (
+            {babies.map((baby: BabyListItem) => (
               <article key={baby.id} className="rounded-[28px] border border-white/70 bg-white/85 p-5 shadow-soft">
                 <div className="flex items-start justify-between gap-3">
                   <div>
